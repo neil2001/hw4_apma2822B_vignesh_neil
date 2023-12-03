@@ -102,7 +102,7 @@ int main() {
         cudaStreamCreate(&streams[i]);
     }
 
-    dim3 nthreads(rowsPerBlock, 1, 1); // threads per block NOTE NOT MORE THAN 1024
+    dim3 nthreads(256, 1, 1); // threads per block NOTE NOT MORE THAN 1024
     // 30 rows per block
     // 1 thread per row
 

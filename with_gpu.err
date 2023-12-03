@@ -5,4 +5,3 @@ module: unloading 'gcc/10.2'
 module: loading 'gcc/10.2'
 module: gcc: "Note: loading the gcc module overrides the gcc version on the system.  If you want to revert to the version of gcc provided by the OS, unload the gcc module."
 SKIPPED: /oscar/home/vpandiar/APMA2822B/hw4_apma2822B_vignesh_neil/outputs/gpu_report.sqlite does not contain NV Tools Extension (NVTX) data.
-SKIPPED: /oscar/home/vpandiar/APMA2822B/hw4_apma2822B_vignesh_neil/outputs/gpu_report.sqlite does not contain CUDA kernel data.
