@@ -67,8 +67,8 @@ int main() {
     cudaSetDevice(0);
 
 
-    int M = 500;
-    int N = 5000;
+    int M = 3000;
+    int N = 3000;
 
     double mat_h[M*N] = {0};
     double vec_h[N] = {0};
@@ -106,8 +106,8 @@ int main() {
     // 30 rows per block
     // 1 thread per row
 
-    dim3 nblocks (1, 1, 1); // blocks per grid -> should be 1
-    // dim3 nblocks ((rowsPerBlock + nthread.x - 1)/nthread.x, 1, 1); // blocks per grid -> should be 1
+    // dim3 nblocks (1, 1, 1); // blocks per grid -> should be 1
+    dim3 nblocks ((rowsPerBlock + nthreads.x - 1)/nthreads.x, 1, 1); // blocks per grid -> should be 1
     gettimeofday(&startTime, nullptr);  
 
     for (int i=0; i<numStreams; i++) {
