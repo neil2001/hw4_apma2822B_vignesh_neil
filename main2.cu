@@ -161,7 +161,9 @@ int main() {
         }
     }
 
-    cudaFree(res_d);
+    cudaFree(res_d0);
+    cudaFree(res_d1);
     cudaFree(vec_d);
-    cudaFree(mat_d);
+    cudaFree(mat_d0);
+    cudaFree(mat_d1);
 }
