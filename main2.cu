@@ -124,7 +124,7 @@ int main() {
         matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d1, vec_d, res_d1);
 
         cudaMemcpyAsync(res_h0, res_d0, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
-        cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
+        cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream1);
         // cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - rowsPerBlock), cudaMemcpyDeviceToHost, stream1);
     }
 
