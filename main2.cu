@@ -33,6 +33,7 @@ __global__ void matVecKernel(int m, int n, double *rows, double *vec, double *re
             // printf("r,c = (%d, %d)\n", (int) row, i);
             sum += rows[offset + i] * vec[i];
             // printf("%d, %g, %g\n", (row * cols) + i, vector[i], sum);
+            printf("%ld, %g, %g, %g\n", (row * n) + i, rows[offset + i], vec[i], sum);
         }
         res[row] = sum;
     }
@@ -68,7 +69,7 @@ int main() {
 
 
     int M = 100;
-    int N = 100;
+    int N = 5000;
 
     int rowsPerBlock = (M / numStreams);
 
