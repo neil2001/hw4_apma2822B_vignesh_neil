@@ -33,7 +33,7 @@ __global__ void matVecKernel(int m, int n, double *rows, double *vec, double *re
             // printf("r,c = (%d, %d)\n", (int) row, i);
             sum += rows[offset + i] * vec[i];
             // printf("%d, %g, %g\n", (row * cols) + i, vector[i], sum);
-            printf("%ld, %g, %g, %g\n", (row * n) + i, rows[offset + i], vec[i], sum);
+            // printf("%ld, %g, %g, %g\n", (row * n) + i, rows[offset + i], vec[i], sum);
         }
         res[row] = sum;
     }
@@ -69,7 +69,7 @@ int main() {
 
 
     int M = 100;
-    int N = 5000;
+    int N = 1000;
 
     int rowsPerBlock = (M / numStreams);
 
@@ -117,14 +117,16 @@ int main() {
 
     cudaMemcpy(vec_d, vec_h, sizeof(double)*N,cudaMemcpyHostToDevice);
 
-    cudaMemcpyAsync(mat_d0, mat_h0, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
-    cudaMemcpyAsync(mat_d1, mat_h1, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
-    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d0, vec_d, res_d0);
-    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d1, vec_d, res_d1);
+    for (int i = 0; i < 10; i++) {
+        cudaMemcpyAsync(mat_d0, mat_h0, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
+        cudaMemcpyAsync(mat_d1, mat_h1, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
+        matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d0, vec_d, res_d0);
+        matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d1, vec_d, res_d1);
 
-    cudaMemcpyAsync(res_h0, res_d0, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
-    cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
-    // cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - rowsPerBlock), cudaMemcpyDeviceToHost, stream1);
+        cudaMemcpyAsync(res_h0, res_d0, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
+        cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
+        // cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - rowsPerBlock), cudaMemcpyDeviceToHost, stream1);
+    }
 
     cudaStreamSynchronize(stream0);
     cudaStreamSynchronize(stream1);
