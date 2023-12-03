@@ -22,5 +22,5 @@ nvidia-smi
 
 # Compile CUDA program and run
 #nvcc -arch sm_20 vecadd.cu -o vecadd
-nvcc -arch=sm_86 -O2 main.cu
+nvcc -arch=sm_86 -O2 sample.cu
 nsys profile --stats=true --force-overwrite=true --output=outputs/gpu_report ./a.out
