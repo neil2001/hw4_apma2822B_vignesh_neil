@@ -110,16 +110,18 @@ int main() {
     for (int i=0; i<numStreams; i++) {
         // copy H2D
         int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
-        cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, &treams[i]);
+        cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, streams[i]);
         // run / kernel func
         matVecKernel<<<nblocks, nthreads, 0, streams[i]>>>(M, N, &mat_d[i*rowsPerBlock*N], vec_d, &res_d[i*rowsPerBlock]);
         // cudaMemcpyAsync(mat_h[], mat_d[], sizeof(double)*, cudaMemcpyDeviceToDevice, streams[i]);
-        cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, &streams[i]);
+        cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, streams[i]);
         // copy D2H
     }
     
     for (int i = 0; i < numStreams; i++) {
         cudaStreamSynchronize(streams[i]);
+    }
+    for (int i = 0; i < numStreams; i++) {
         cudaStreamDestroy(streams[i]);
     }
 

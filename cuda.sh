@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Request a GPU partition node and access to 1 GPU
-# SBATCH -p gpu --gres=gpu:1 --gres-flags=enforce-binding
-#SBATCH -p 3090-gcondo --gres=gpu:1 --gres-flags=enforce-binding
+#SBATCH -p gpu --gres=gpu:1 --gres-flags=enforce-binding
+# SBATCH -p 3090-gcondo --gres=gpu:1 --gres-flags=enforce-binding
 
 # Ensures all allocated cores are on the same node
 #SBATCH -N 1
@@ -22,5 +22,6 @@ nvidia-smi
 
 # Compile CUDA program and run
 #nvcc -arch sm_20 vecadd.cu -o vecadd
-nvcc -arch=sm_86 -O2 sample.cu
+# nvcc -arch=sm_86 -O2 sample.cu
+nvcc -O2 main.cu
 nsys profile --stats=true --force-overwrite=true --output=outputs/gpu_report ./a.out
