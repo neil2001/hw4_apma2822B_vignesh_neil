@@ -112,7 +112,7 @@ int main() {
     }
     
     for (int i = 0; i < numStreams; i++) {
-        cudaStreamSynchronize(streams[i]);
+        // cudaStreamSynchronize(streams[i]);
         cudaStreamDestroy(streams[i]);
     }
 
