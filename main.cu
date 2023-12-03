@@ -110,19 +110,26 @@ int main() {
     dim3 nblocks ((rowsPerBlock + nthreads.x - 1)/nthreads.x, 1, 1); // blocks per grid -> should be 1
     gettimeofday(&startTime, nullptr);  
 
+    // for (int i=0; i<numStreams; i++) {
+    //     // copy H2D
+    //     int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
+    //     cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, streams[i]);
+    // }
+    // for (int i=0; i<numStreams; i++) {
+    //     matVecKernel<<<nblocks, nthreads, 0, streams[i]>>>(M, N, &mat_d[i*rowsPerBlock*N], vec_d, &res_d[i*rowsPerBlock]);
+    // }
+    // for (int i=0; i<numStreams; i++) {
+    //     int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
+    //     cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, streams[i]);
+    // }
     for (int i=0; i<numStreams; i++) {
         // copy H2D
         int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
         cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, streams[i]);
-    }
-    for (int i=0; i<numStreams; i++) {
         matVecKernel<<<nblocks, nthreads, 0, streams[i]>>>(M, N, &mat_d[i*rowsPerBlock*N], vec_d, &res_d[i*rowsPerBlock]);
-    }
-    for (int i=0; i<numStreams; i++) {
-        int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
         cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, streams[i]);
     }
-     
+
     for (int i = 0; i < numStreams; i++) {
         cudaStreamSynchronize(streams[i]);
     }
