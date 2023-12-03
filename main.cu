@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <cuda_runtime.h>
 
 using namespace std;
 
@@ -49,6 +50,12 @@ void instantiateMatVec(int m, int n, double *mat, double *vec) {
 }
 
 int main() {
+    cudaDeviceProp prop;
+    cudaGetDeviceProperties(&prop, 0);
+
+    std::cout << "Compute Capability: " << prop.major << "." << prop.minor << std::endl;
+    std::cout << "Concurrent Kernels: " << (prop.concurrentKernels ? "Yes" : "No") << std::endl;
+
     int ncuda_devices = 0;
     cudaGetDeviceCount(&ncuda_devices);
     printf("ncuda_devices = %d\n",ncuda_devices);
