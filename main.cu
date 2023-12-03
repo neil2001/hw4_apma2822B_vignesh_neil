@@ -32,7 +32,7 @@ __global__ void matVecKernel(int m, int n, double *rows, double *vec, double *re
         for (int i = 0; i < n; i++) {
             // printf("r,c = (%d, %d)\n", (int) row, i);
             sum += rows[offset + i] * vec[i];
-            // printf("%d, %g, %g\n", (row * cols) + i, vector[i], sum);
+            printf("%ld, %g, %g, %g\n", (row * n) + i, rows[offset + i], vec[i], sum);
         }
         res[row] = sum;
     }
@@ -76,14 +76,16 @@ int main() {
 
     instantiateMatVec(M, N, mat_h, vec_h);
 
-    double *mat_d;
+    double *mat_d_1;
+    double *mat_d_2;
     double *vec_d;
     double *res_d;
 
     int rowsPerBlock = (M / numStreams) + 1;
 
     // allocate memory on device
-    cudaMalloc( (void**) &mat_d, sizeof(double)*M*N);
+    cudaMalloc( (void**) &mat_d_1, sizeof(double)*rowsPerBlock*N);
+    cudaMalloc( (void**) &mat_d_2, sizeof(double)*rowsPerBlock*N);
     cudaMalloc( (void**) &vec_d, sizeof(double)*N);
     cudaMalloc( (void**) &res_d, sizeof(double)*M);
 
@@ -112,10 +114,10 @@ int main() {
     cudaStreamCreate(&stream0);
     cudaStreamCreate(&stream1);
 
-    cudaMemcpyAsync(&mat_d[0], &mat_h[0], sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
-    cudaMemcpyAsync(&mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], sizeof(double)*(N-M - rowsPerBlock*N), cudaMemcpyHostToDevice, stream1);
-    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, &mat_d[0], vec_d, &res_d[0]);
-    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, &mat_d[rowsPerBlock*N], vec_d, &res_d[rowsPerBlock]);
+    cudaMemcpyAsync(mat_d_1, mat_h, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
+    cudaMemcpyAsync(mat_d_2, &mat_h[rowsPerBlock*N], sizeof(double)*(N-M - rowsPerBlock*N), cudaMemcpyHostToDevice, stream1);
+    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d_1, vec_d, &res_d[0]);
+    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d_2, vec_d, &res_d[rowsPerBlock]);
 
     cudaMemcpyAsync(res_h, res_d, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
     cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - rowsPerBlock), cudaMemcpyDeviceToHost, stream1);
@@ -171,5 +173,6 @@ int main() {
     }
     cudaFree(res_d);
     cudaFree(vec_d);
-    cudaFree(mat_d);
+    cudaFree(mat_d_1);
+    cudaFree(mat_d_2);
 }
