@@ -15,7 +15,7 @@ using namespace std;
 #define NWARPS 32
 #define ROWS_PER_BLOCK 4
 
-int numStreams = 8;
+int numStreams = 2;
 
 // randomization
 std::random_device rd;
@@ -67,8 +67,8 @@ int main() {
     cudaSetDevice(0);
 
 
-    int M = 1000;
-    int N = 10000;
+    int M = 100;
+    int N = 100;
 
     double mat_h[M*N] = {0};
     double vec_h[N] = {0};
@@ -79,6 +79,8 @@ int main() {
     double *mat_d;
     double *vec_d;
     double *res_d;
+
+    int rowsPerBlock = (M / numStreams) + 1;
 
     // allocate memory on device
     cudaMalloc( (void**) &mat_d, sizeof(double)*M*N);
@@ -93,11 +95,10 @@ int main() {
 
     cudaStream_t streams[numStreams];
 
-    int rowsPerBlock = (M / numStreams) + 1;
 
-    for (int i=0; i<numStreams; i++) {
-        cudaStreamCreate(&streams[i]);
-    }
+    // for (int i=0; i<numStreams; i++) {
+    //     cudaStreamCreate(&streams[i]);
+    // }
 
     dim3 nthreads(rowsPerBlock, 1, 1); // threads per block NOTE NOT MORE THAN 1024
     // 30 rows per block
@@ -107,23 +108,42 @@ int main() {
     // dim3 nblocks ((rowsPerBlock + nthreads.x-1)/nthreads.x, 1, 1); // blocks per grid -> should be 1
     gettimeofday(&startTime, nullptr);  
 
-    for (int i=0; i<numStreams; i++) {
-        // copy H2D
-        int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
-        cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, streams[i]);
-        // run / kernel func
-        matVecKernel<<<nblocks, nthreads, 0, streams[i]>>>(M, N, &mat_d[i*rowsPerBlock*N], vec_d, &res_d[i*rowsPerBlock]);
-        // cudaMemcpyAsync(mat_h[], mat_d[], sizeof(double)*, cudaMemcpyDeviceToDevice, streams[i]);
-        cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, streams[i]);
-        // copy D2H
-    }
+    cudaStream_t stream0, stream1;
+    cudaStreamCreate(&stream0);
+    cudaStreamCreate(&stream1);
+
+    cudaMemcpyAsync(mat_d, mat_h, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
+    cudaMemcpyAsync(&mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
+    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d, vec_d, res_d);
+    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, &mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], &res_d[rowsPerBlock]);
+
+    cudaMemcpyAsync(res_h, res_d, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
+    cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream1);
+
+    cudaStreamSynchronize (stream0);
+    cudaStreamSynchronize (stream1);
+
+    cudaStreamDestroy (stream0);
+    cudaStreamDestroy (stream1);
+
+
+    // for (int i=0; i<numStreams; i++) {
+    //     // copy H2D
+    //     int numToCpy = min(N*M - i*rowsPerBlock*N, rowsPerBlock*N);
+    //     cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*numToCpy, cudaMemcpyHostToDevice, streams[i]);
+    //     // run / kernel func
+    //     matVecKernel<<<nblocks, nthreads, 0, streams[i]>>>(M, N, &mat_d[i*rowsPerBlock*N], vec_d, &res_d[i*rowsPerBlock]);
+    //     // cudaMemcpyAsync(mat_h[], mat_d[], sizeof(double)*, cudaMemcpyDeviceToDevice, streams[i]);
+    //     cudaMemcpyAsync(&res_h[i*rowsPerBlock], &res_d[i*rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - i * rowsPerBlock), cudaMemcpyDeviceToHost, streams[i]);
+    //     // copy D2H
+    // }
     
-    for (int i = 0; i < numStreams; i++) {
-        cudaStreamSynchronize(streams[i]);
-    }
-    for (int i = 0; i < numStreams; i++) {
-        cudaStreamDestroy(streams[i]);
-    }
+    // for (int i = 0; i < numStreams; i++) {
+    //     cudaStreamSynchronize(streams[i]);
+    // }
+    // for (int i = 0; i < numStreams; i++) {
+    //     cudaStreamDestroy(streams[i]);
+    // }
 
     cudaDeviceSynchronize();
 
