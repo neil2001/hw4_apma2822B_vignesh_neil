@@ -1,13 +1,13 @@
 ## SLURM PROLOG ###############################################################
-##    Job ID : 12257668
+##    Job ID : 12257810
 ##  Job Name : cuda.sh
-##  Nodelist : gpu2264
+##  Nodelist : gpu2104
 ##      CPUs : 1
 ##   Mem/CPU : 2800 MB
 ## Directory : /oscar/home/vpandiar/APMA2822B/hw4_apma2822B_vignesh_neil
-##   Job Started : Sat Dec  2 21:34:25 EST 2023
+##   Job Started : Sat Dec  2 21:46:33 EST 2023
 ###############################################################################
-Sat Dec  2 21:34:25 2023       
+Sat Dec  2 21:46:33 2023       
 +---------------------------------------------------------------------------------------+
 | NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     |
 |-----------------------------------------+----------------------+----------------------+
@@ -15,8 +15,8 @@ Sat Dec  2 21:34:25 2023
 | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
 |                                         |                      |               MIG M. |
 |=========================================+======================+======================|
-|   0  NVIDIA GeForce RTX 3090        Off | 00000000:61:00.0 Off |                  N/A |
-| 30%   27C    P8              18W / 350W |     34MiB / 24576MiB |      0%      Default |
+|   0  NVIDIA GeForce RTX 3090        Off | 00000000:41:00.0 Off |                  N/A |
+| 30%   28C    P8              24W / 350W |     13MiB / 24576MiB |      0%      Default |
 |                                         |                      |                  N/A |
 +-----------------------------------------+----------------------+----------------------+
                                                                                          
@@ -25,67 +25,82 @@ Sat Dec  2 21:34:25 2023
 |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
 |        ID   ID                                                             Usage      |
 |=======================================================================================|
-|    0   N/A  N/A     23253      G   X                                            25MiB |
+|    0   N/A  N/A     23219      G   X                                             5MiB |
 +---------------------------------------------------------------------------------------+
 Compute Capability: 8.6
 Concurrent Kernels: Yes
 ncuda_devices = 1
-creating streams took 33503 microseconds
-no diff, found 260484 
-DIFF FOUND: expected: 226514, actual: 0DIFF FOUND: expected: 247644, actual: 0DIFF FOUND: expected: 255925, actual: 0DIFF FOUND: expected: 227832, actual: 0DIFF FOUND: expected: 262163, actual: 0DIFF FOUND: expected: 218513, actual: 0DIFF FOUND: expected: 238550, actual: 0DIFF FOUND: expected: 219204, actual: 0DIFF FOUND: expected: 234410, actual: 0DIFF FOUND: expected: 278316, actual: 0DIFF FOUND: expected: 240840, actual: 0DIFF FOUND: expected: 254771, actual: 0DIFF FOUND: expected: 264429, actual: 0DIFF FOUND: expected: 235785, actual: 0DIFF FOUND: expected: 209755, actual: 0DIFF FOUND: expected: 247492, actual: 0DIFF FOUND: expected: 214870, actual: 0DIFF FOUND: expected: 259440, actual: 0DIFF FOUND: expected: 243336, actual: 0DIFF FOUND: expected: 241619, actual: 0DIFF FOUND: expected: 219013, actual: 0DIFF FOUND: expected: 239230, actual: 0DIFF FOUND: expected: 255838, actual: 0DIFF FOUND: expected: 261186, actual: 0DIFF FOUND: expected: 259274, actual: 0DIFF FOUND: expected: 240266, actual: 0DIFF FOUND: expected: 265568, actual: 0DIFF FOUND: expected: 212840, actual: 0DIFF FOUND: expected: 248618, actual: 0DIFF FOUND: expected: 273635, actual: 0DIFF FOUND: expected: 256553, actual: 0DIFF FOUND: expected: 236321, actual: 0DIFF FOUND: expected: 241833, actual: 0DIFF FOUND: expected: 244469, actual: 0DIFF FOUND: expected: 243078, actual: 0DIFF FOUND: expected: 226623, actual: 0DIFF FOUND: expected: 265567, actual: 0DIFF FOUND: expected: 244194, actual: 0DIFF FOUND: expected: 254583, actual: 0DIFF FOUND: expected: 228223, actual: 0DIFF FOUND: expected: 236286, actual: 0DIFF FOUND: expected: 248816, actual: 0DIFF FOUND: expected: 237317, actual: 0DIFF FOUND: expected: 246387, actual: 0DIFF FOUND: expected: 256001, actual: 0DIFF FOUND: expected: 249150, actual: 0DIFF FOUND: expected: 216194, actual: 0DIFF FOUND: expected: 219774, actual: 0DIFF FOUND: expected: 238132, actual: 0Generating '/tmp/nsys-report-982d.qdstrm'
-[1/8] [0%                          ] gpu_report.nsys-rep[1/8] [0%                          ] gpu_report.nsys-rep[1/8] [===========50%              ] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep[1/8] [========================99% ] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep[1/8] [=========43%                ] gpu_report.nsys-rep[1/8] [=========44%                ] gpu_report.nsys-rep[1/8] [=====31%                    ] gpu_report.nsys-rep[1/8] [=========46%                ] gpu_report.nsys-rep[1/8] [==========47%               ] gpu_report.nsys-rep[1/8] [==========48%               ] gpu_report.nsys-rep[1/8] [==========49%               ] gpu_report.nsys-rep[1/8] [===========51%              ] gpu_report.nsys-rep[1/8] [===========52%              ] gpu_report.nsys-rep[1/8] [=============59%            ] gpu_report.nsys-rep[1/8] [==============64%           ] gpu_report.nsys-rep[1/8] [=================72%        ] gpu_report.nsys-rep[1/8] [==================77%       ] gpu_report.nsys-rep[1/8] [==================78%       ] gpu_report.nsys-rep[1/8] [===================80%      ] gpu_report.nsys-rep[1/8] [===================81%      ] gpu_report.nsys-rep[1/8] [====================83%     ] gpu_report.nsys-rep[1/8] [====================84%     ] gpu_report.nsys-rep[1/8] [=====================88%    ] gpu_report.nsys-rep[1/8] [========================98% ] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep
+creating streams took 247 microseconds
+no diff, found 253061 
+DIFF FOUND: expected: 235319, actual: 0DIFF FOUND: expected: 242485, actual: 0DIFF FOUND: expected: 266237, actual: 0DIFF FOUND: expected: 215779, actual: 0DIFF FOUND: expected: 241912, actual: 0DIFF FOUND: expected: 252756, actual: 0DIFF FOUND: expected: 250037, actual: 0DIFF FOUND: expected: 244122, actual: 0DIFF FOUND: expected: 253598, actual: 0DIFF FOUND: expected: 258378, actual: 0DIFF FOUND: expected: 261673, actual: 0DIFF FOUND: expected: 277933, actual: 0DIFF FOUND: expected: 225156, actual: 0DIFF FOUND: expected: 227647, actual: 0DIFF FOUND: expected: 229116, actual: 0DIFF FOUND: expected: 235606, actual: 0DIFF FOUND: expected: 241667, actual: 0DIFF FOUND: expected: 246500, actual: 0DIFF FOUND: expected: 248627, actual: 0DIFF FOUND: expected: 251880, actual: 0DIFF FOUND: expected: 244096, actual: 0DIFF FOUND: expected: 236591, actual: 0DIFF FOUND: expected: 227739, actual: 0DIFF FOUND: expected: 246503, actual: 0DIFF FOUND: expected: 259327, actual: 0DIFF FOUND: expected: 240536, actual: 0DIFF FOUND: expected: 235688, actual: 0DIFF FOUND: expected: 247021, actual: 0DIFF FOUND: expected: 246921, actual: 0DIFF FOUND: expected: 251102, actual: 0DIFF FOUND: expected: 240363, actual: 0DIFF FOUND: expected: 252355, actual: 0DIFF FOUND: expected: 231859, actual: 0DIFF FOUND: expected: 226077, actual: 0DIFF FOUND: expected: 233203, actual: 0DIFF FOUND: expected: 226220, actual: 0DIFF FOUND: expected: 233943, actual: 0DIFF FOUND: expected: 278106, actual: 0DIFF FOUND: expected: 255824, actual: 0DIFF FOUND: expected: 263286, actual: 0DIFF FOUND: expected: 215922, actual: 0DIFF FOUND: expected: 246877, actual: 0DIFF FOUND: expected: 255423, actual: 0DIFF FOUND: expected: 218840, actual: 0DIFF FOUND: expected: 228790, actual: 0DIFF FOUND: expected: 239359, actual: 0DIFF FOUND: expected: 255520, actual: 0DIFF FOUND: expected: 241846, actual: 0DIFF FOUND: expected: 203955, actual: 0Generating '/tmp/nsys-report-7e01.qdstrm'
+[1/8] [0%                          ] gpu_report.nsys-rep[1/8] [0%                          ] gpu_report.nsys-rep[1/8] [===========50%              ] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep[1/8] [========42%                 ] gpu_report.nsys-rep[1/8] [=========44%                ] gpu_report.nsys-rep[1/8] [=====31%                    ] gpu_report.nsys-rep[1/8] [=========45%                ] gpu_report.nsys-rep[1/8] [=========46%                ] gpu_report.nsys-rep[1/8] [==========47%               ] gpu_report.nsys-rep[1/8] [==========48%               ] gpu_report.nsys-rep[1/8] [===========50%              ] gpu_report.nsys-rep[1/8] [===========51%              ] gpu_report.nsys-rep[1/8] [=============60%            ] gpu_report.nsys-rep[1/8] [===============65%          ] gpu_report.nsys-rep[1/8] [================71%         ] gpu_report.nsys-rep[1/8] [==================77%       ] gpu_report.nsys-rep[1/8] [===================79%      ] gpu_report.nsys-rep[1/8] [===================80%      ] gpu_report.nsys-rep[1/8] [===================82%      ] gpu_report.nsys-rep[1/8] [====================83%     ] gpu_report.nsys-rep[1/8] [=====================88%    ] gpu_report.nsys-rep[1/8] [========================98% ] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep[1/8] [========================100%] gpu_report.nsys-rep
 [2/8] [0%                          ] gpu_report.sqlite[2/8] [1%                          ] gpu_report.sqlite[2/8] [2%                          ] gpu_report.sqlite[2/8] [3%                          ] gpu_report.sqlite[2/8] [4%                          ] gpu_report.sqlite[2/8] [5%                          ] gpu_report.sqlite[2/8] [6%                          ] gpu_report.sqlite[2/8] [7%                          ] gpu_report.sqlite[2/8] [8%                          ] gpu_report.sqlite[2/8] [9%                          ] gpu_report.sqlite[2/8] [10%                         ] gpu_report.sqlite[2/8] [11%                         ] gpu_report.sqlite[2/8] [12%                         ] gpu_report.sqlite[2/8] [13%                         ] gpu_report.sqlite[2/8] [14%                         ] gpu_report.sqlite[2/8] [=15%                        ] gpu_report.sqlite[2/8] [=16%                        ] gpu_report.sqlite[2/8] [=17%                        ] gpu_report.sqlite[2/8] [==18%                       ] gpu_report.sqlite[2/8] [==19%                       ] gpu_report.sqlite[2/8] [==20%                       ] gpu_report.sqlite[2/8] [==21%                       ] gpu_report.sqlite[2/8] [===22%                      ] gpu_report.sqlite[2/8] [===23%                      ] gpu_report.sqlite[2/8] [===24%                      ] gpu_report.sqlite[2/8] [====25%                     ] gpu_report.sqlite[2/8] [====26%                     ] gpu_report.sqlite[2/8] [====27%                     ] gpu_report.sqlite[2/8] [====28%                     ] gpu_report.sqlite[2/8] [=====29%                    ] gpu_report.sqlite[2/8] [=====30%                    ] gpu_report.sqlite[2/8] [=====31%                    ] gpu_report.sqlite[2/8] [=====32%                    ] gpu_report.sqlite[2/8] [======33%                   ] gpu_report.sqlite[2/8] [======34%                   ] gpu_report.sqlite[2/8] [======35%                   ] gpu_report.sqlite[2/8] [=======36%                  ] gpu_report.sqlite[2/8] [=======37%                  ] gpu_report.sqlite[2/8] [=======38%                  ] gpu_report.sqlite[2/8] [=======39%                  ] gpu_report.sqlite[2/8] [========40%                 ] gpu_report.sqlite[2/8] [========41%                 ] gpu_report.sqlite[2/8] [========42%                 ] gpu_report.sqlite[2/8] [=========43%                ] gpu_report.sqlite[2/8] [=========44%                ] gpu_report.sqlite[2/8] [=========45%                ] gpu_report.sqlite[2/8] [=========46%                ] gpu_report.sqlite[2/8] [==========47%               ] gpu_report.sqlite[2/8] [==========48%               ] gpu_report.sqlite[2/8] [==========49%               ] gpu_report.sqlite[2/8] [===========50%              ] gpu_report.sqlite[2/8] [===========51%              ] gpu_report.sqlite[2/8] [===========52%              ] gpu_report.sqlite[2/8] [===========53%              ] gpu_report.sqlite[2/8] [============54%             ] gpu_report.sqlite[2/8] [============55%             ] gpu_report.sqlite[2/8] [============56%             ] gpu_report.sqlite[2/8] [============57%             ] gpu_report.sqlite[2/8] [=============58%            ] gpu_report.sqlite[2/8] [=============59%            ] gpu_report.sqlite[2/8] [=============60%            ] gpu_report.sqlite[2/8] [==============61%           ] gpu_report.sqlite[2/8] [==============62%           ] gpu_report.sqlite[2/8] [==============63%           ] gpu_report.sqlite[2/8] [==============64%           ] gpu_report.sqlite[2/8] [===============65%          ] gpu_report.sqlite[2/8] [===============66%          ] gpu_report.sqlite[2/8] [===============67%          ] gpu_report.sqlite[2/8] [================68%         ] gpu_report.sqlite[2/8] [================69%         ] gpu_report.sqlite[2/8] [================70%         ] gpu_report.sqlite[2/8] [================71%         ] gpu_report.sqlite[2/8] [=================72%        ] gpu_report.sqlite[2/8] [=================73%        ] gpu_report.sqlite[2/8] [=================74%        ] gpu_report.sqlite[2/8] [==================75%       ] gpu_report.sqlite[2/8] [==================76%       ] gpu_report.sqlite[2/8] [==================77%       ] gpu_report.sqlite[2/8] [==================78%       ] gpu_report.sqlite[2/8] [===================79%      ] gpu_report.sqlite[2/8] [===================80%      ] gpu_report.sqlite[2/8] [===================81%      ] gpu_report.sqlite[2/8] [===================82%      ] gpu_report.sqlite[2/8] [====================83%     ] gpu_report.sqlite[2/8] [====================84%     ] gpu_report.sqlite[2/8] [====================85%     ] gpu_report.sqlite[2/8] [=====================86%    ] gpu_report.sqlite[2/8] [=====================87%    ] gpu_report.sqlite[2/8] [=====================88%    ] gpu_report.sqlite[2/8] [=====================89%    ] gpu_report.sqlite[2/8] [======================90%   ] gpu_report.sqlite[2/8] [======================91%   ] gpu_report.sqlite[2/8] [======================92%   ] gpu_report.sqlite[2/8] [=======================93%  ] gpu_report.sqlite[2/8] [=======================94%  ] gpu_report.sqlite[2/8] [=======================95%  ] gpu_report.sqlite[2/8] [=======================96%  ] gpu_report.sqlite[2/8] [========================97% ] gpu_report.sqlite[2/8] [========================98% ] gpu_report.sqlite[2/8] [========================99% ] gpu_report.sqlite[2/8] [========================100%] gpu_report.sqlite[2/8] [========================100%] gpu_report.sqlite
 [3/8] Executing 'nvtx_sum' stats report
 [4/8] Executing 'osrt_sum' stats report
 
- Time (%)  Total Time (ns)  Num Calls    Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)           Name         
- --------  ---------------  ---------  ------------  -----------  --------  ----------  ------------  ---------------------
-     52.1      154,950,114         12  12,912,509.5  6,101,486.0     3,840  48,270,023  16,772,529.3  poll                 
-     44.2      131,650,763        491     268,127.8     43,509.0       410  16,317,106   1,410,249.4  ioctl                
-      2.9        8,549,784         27     316,658.7      8,060.0     4,900   7,886,149   1,513,022.3  mmap64               
-      0.3          752,965          5     150,593.0    117,769.0    65,820     258,238      92,450.1  pthread_create       
-      0.2          496,356          3     165,452.0     21,390.0    20,699     454,267     250,121.4  sem_timedwait        
-      0.1          263,880         58       4,549.7      4,760.0       570      11,700       2,808.5  open64               
-      0.1          219,558         36       6,098.8      3,970.0     1,430      41,099       7,000.4  fopen                
-      0.1          158,499         11      14,409.0      8,850.0       840      54,729      15,698.8  write                
-      0.0          120,049         19       6,318.4      2,680.0     1,270      62,270      13,650.9  mmap                 
-      0.0          112,770          9      12,530.0         50.0        50      57,870      22,055.5  fflush               
-      0.0           92,750         29       3,198.3      2,900.0     1,710       7,430       1,301.0  fclose               
-      0.0           49,250         27       1,824.1         70.0        50      47,360       9,100.5  fgets                
-      0.0           48,280          7       6,897.1      5,820.0     1,170      14,050       5,213.5  open                 
-      0.0           18,650          2       9,325.0      9,325.0     6,800      11,850       3,570.9  socket               
-      0.0           16,239         14       1,159.9        565.0       250       4,600       1,473.3  read                 
-      0.0           16,180          6       2,696.7      2,935.0     1,060       3,370         871.0  munmap               
-      0.0           16,130         51         316.3        290.0       160         710         112.3  fcntl                
-      0.0           13,410          1      13,410.0     13,410.0    13,410      13,410           0.0  connect              
-      0.0           12,580          5       2,516.0      2,500.0     1,800       3,560         726.7  mprotect             
-      0.0            8,400          9         933.3        140.0        50       6,430       2,094.4  fwrite               
-      0.0            4,690         64          73.3         50.0        40         300          53.9  pthread_mutex_trylock
-      0.0            4,180          1       4,180.0      4,180.0     4,180       4,180           0.0  pipe2                
-      0.0            3,570          1       3,570.0      3,570.0     3,570       3,570           0.0  bind                 
-      0.0            2,220          7         317.1        300.0       170         470         135.1  dup                  
-      0.0            1,580          3         526.7        750.0        80         750         386.8  putc                 
-      0.0              540          1         540.0        540.0       540         540           0.0  listen               
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)          Name         
+ --------  ---------------  ---------  -----------  -----------  --------  ----------  -----------  ---------------------
+     51.7       72,252,639        500    144,505.3     41,889.5       410  17,483,172    933,604.7  ioctl                
+     44.9       62,774,088         10  6,277,408.8  2,514,236.0     6,660  29,716,303  9,727,180.4  poll                 
+      1.9        2,639,235         27     97,749.4      6,590.0     4,860   2,018,339    384,723.2  mmap64               
+      0.3          478,978         10     47,897.8     20,850.0       750     279,319     83,832.4  write                
+      0.3          473,208         36     13,144.7      3,750.0       990     303,568     49,920.8  fopen                
+      0.3          459,617          5     91,923.4    102,859.0    63,520     117,519     25,905.9  pthread_create       
+      0.2          261,708         58      4,512.2      4,565.0       530      28,550      4,113.6  open64               
+      0.1          124,539         19      6,554.7      2,920.0     1,280      60,320     13,255.3  mmap                 
+      0.1          116,710          9     12,967.8        130.0        50      53,830     22,641.3  fflush               
+      0.1           93,008         29      3,207.2      3,050.0     1,570       5,960      1,110.3  fclose               
+      0.0           49,699         27      1,840.7         70.0        50      47,819      9,188.9  fgets                
+      0.0           43,630          7      6,232.9      5,190.0     1,790      15,770      5,103.4  open                 
+      0.0           21,340          1     21,340.0     21,340.0    21,340      21,340          0.0  connect              
+      0.0           19,090         51        374.3        310.0       160       1,290        224.5  fcntl                
+      0.0           19,050         13      1,465.4        570.0       240       5,730      1,862.0  read                 
+      0.0           12,830          5      2,566.0      2,560.0     1,350       3,880        906.9  munmap               
+      0.0           12,230          2      6,115.0      6,115.0     1,600      10,630      6,385.2  socket               
+      0.0            9,720          5      1,944.0      1,870.0     1,700       2,400        275.9  mprotect             
+      0.0            7,250          9        805.6        120.0        60       4,860      1,579.5  fwrite               
+      0.0            5,510          1      5,510.0      5,510.0     5,510       5,510          0.0  pipe2                
+      0.0            4,930         64         77.0         50.0        40         160         47.8  pthread_mutex_trylock
+      0.0            2,570          7        367.1        280.0       170         770        215.7  dup                  
+      0.0            2,390          1      2,390.0      2,390.0     2,390       2,390          0.0  bind                 
+      0.0            1,030          3        343.3        470.0        50         510        254.8  putc                 
+      0.0              440          1        440.0        440.0       440         440          0.0  listen               
 
 [5/8] Executing 'cuda_api_sum' stats report
 
- Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)    Min (ns)   Max (ns)   StdDev (ns)                 Name               
- --------  ---------------  ---------  ------------  ------------  --------  ----------  ------------  ---------------------------------
-     97.3       33,254,338          2  16,627,169.0  16,627,169.0     4,230  33,250,108  23,508,385.8  cudaStreamSynchronize            
-      1.3          449,217          1     449,217.0     449,217.0   449,217     449,217           0.0  cudaGetDeviceProperties_v2_v12000
-      0.6          199,259          3      66,419.7       5,010.0     4,420     189,829     106,876.0  cudaMalloc                       
-      0.5          164,529          2      82,264.5      82,264.5     6,820     157,709     106,694.6  cudaLaunchKernel                 
-      0.1           39,719          1      39,719.0      39,719.0    39,719      39,719           0.0  cudaMemcpy                       
-      0.1           35,330          4       8,832.5       8,440.0     1,260      17,190       8,723.9  cudaMemcpyAsync                  
-      0.1           28,260          2      14,130.0      14,130.0     3,730      24,530      14,707.8  cudaStreamCreate                 
-      0.0            4,930          3       1,643.3         590.0       550       3,790       1,859.2  cudaFree                         
-      0.0            4,800          2       2,400.0       2,400.0       490       4,310       2,701.1  cudaStreamDestroy                
-      0.0            3,300          1       3,300.0       3,300.0     3,300       3,300           0.0  cudaDeviceSynchronize            
-      0.0            1,530          1       1,530.0       1,530.0     1,530       1,530           0.0  cuModuleGetLoadingMode           
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)                Name               
+ --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  ---------------------------------
+     43.2          502,207          1  502,207.0  502,207.0   502,207   502,207          0.0  cudaGetDeviceProperties_v2_v12000
+     16.8          195,619          3   65,206.3   12,640.0     3,100   179,879     99,423.9  cudaFree                         
+     16.7          193,429          3   64,476.3    5,380.0     4,250   183,799    103,338.0  cudaMalloc                       
+     13.6          158,200          2   79,100.0   79,100.0     6,400   151,800    102,813.3  cudaLaunchKernel                 
+      3.0           34,438          4    8,609.5    8,304.5     1,110    16,719      8,553.4  cudaMemcpyAsync                  
+      2.8           32,470          1   32,470.0   32,470.0    32,470    32,470          0.0  cudaMemcpy                       
+      2.4           27,310          2   13,655.0   13,655.0     3,280    24,030     14,672.5  cudaStreamCreate                 
+      1.0           11,050          2    5,525.0    5,525.0     2,090     8,960      4,857.8  cudaStreamDestroy                
+      0.4            5,070          2    2,535.0    2,535.0       940     4,130      2,255.7  cudaStreamSynchronize            
+      0.2            1,940          1    1,940.0    1,940.0     1,940     1,940          0.0  cuModuleGetLoadingMode           
 
 [6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                          Name                        
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  ----------------------------------------------------
+    100.0           15,296          2   7,648.0   7,648.0     6,496     8,800      1,629.2  matVecKernel(int, int, double *, double *, double *)
+
 [7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)      Operation     
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ------------------
+     78.2            5,152      2   2,576.0   2,576.0       800     4,352      2,511.6  [CUDA memcpy HtoD]
+     21.8            1,440      1   1,440.0   1,440.0     1,440     1,440          0.0  [CUDA memcpy DtoH]
+
 [8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)      Operation     
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------
+      0.042      2     0.021     0.021     0.001     0.041        0.028  [CUDA memcpy HtoD]
+      0.000      1     0.000     0.000     0.000     0.000        0.000  [CUDA memcpy DtoH]
+
 Generated:
     /oscar/home/vpandiar/APMA2822B/hw4_apma2822B_vignesh_neil/outputs/gpu_report.nsys-rep
     /oscar/home/vpandiar/APMA2822B/hw4_apma2822B_vignesh_neil/outputs/gpu_report.sqlite

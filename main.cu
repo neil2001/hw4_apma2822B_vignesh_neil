@@ -93,7 +93,7 @@ int main() {
     struct timeval endTime;
 
 
-    cudaStream_t streams[numStreams];
+    // cudaStream_t streams[numStreams];
 
 
     // for (int i=0; i<numStreams; i++) {
@@ -112,19 +112,19 @@ int main() {
     cudaStreamCreate(&stream0);
     cudaStreamCreate(&stream1);
 
-    cudaMemcpyAsync(mat_d, mat_h, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
-    cudaMemcpyAsync(&mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
-    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d, vec_d, res_d);
-    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, &mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], &res_d[rowsPerBlock]);
+    cudaMemcpyAsync(&mat_d[0], &mat_h[0], sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
+    cudaMemcpyAsync(&mat_d[rowsPerBlock*N], &mat_h[rowsPerBlock*N], sizeof(double)*(N-M - rowsPerBlock*N), cudaMemcpyHostToDevice, stream1);
+    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, &mat_d[0], vec_d, &res_d[0]);
+    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, &mat_d[rowsPerBlock*N], vec_d, &res_d[rowsPerBlock]);
 
     cudaMemcpyAsync(res_h, res_d, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
     cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream1);
 
-    cudaStreamSynchronize (stream0);
-    cudaStreamSynchronize (stream1);
+    cudaStreamSynchronize(stream0);
+    cudaStreamSynchronize(stream1);
 
-    cudaStreamDestroy (stream0);
-    cudaStreamDestroy (stream1);
+    cudaStreamDestroy(stream0);
+    cudaStreamDestroy(stream1);
 
 
     // for (int i=0; i<numStreams; i++) {
@@ -145,7 +145,7 @@ int main() {
     //     cudaStreamDestroy(streams[i]);
     // }
 
-    cudaDeviceSynchronize();
+    // cudaDeviceSynchronize();
 
     gettimeofday(&endTime, nullptr);
 
