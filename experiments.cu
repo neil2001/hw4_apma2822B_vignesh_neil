@@ -118,8 +118,10 @@ void generateLatexTable(int* N, int* M, int* executionTime, double* flopRate, in
     myfile << "    & & & Execution Time (ms) & Flop Rate (TFLOP/s) \\\\\n";
     myfile << "    \\hline\n";
 
-    for (int i = 0; i < size; i++) {
-        myfile << "    " << N[i] << " & " << M[i] << " & " << numStreams[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
+
+    myfile << "    " << N[i] << " & " << M[i] << " & " << numStreams[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
+    for (int i = 1; i < size; i++) {
+        myfile << "    " << " & & " << numStreams[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
     }
 
     myfile << "    \\hline\n";
@@ -132,9 +134,22 @@ void runExperiment(Experiment e, std::string output) {
 
     // int rowDims[] = {10, 10, 10, 10, 100, 100, 100, 100, 1000, 1000, 1000, 1000, 10000, 10000, 10000};
     // int colDims[] = {10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000};
-    int rowDims[] = {1000, 1500, 2000, 2500, 5000};
-    int colDims[] = {1000, 1500, 2000, 2500, 5000};
-    int streamList[] = {1,2,3,4,5,6,7,8};
+    int rds[] = {1000, 1500}; // , 2000, 2500, 5000};
+    int cds[] = {1000, 1500}; //, 2000, 2500, 5000};
+
+    int dims = (sizeof(rds) / sizeof(rds[0]));
+    int rowDims[dims*8];
+    int colDims[dims*8];
+
+    for (int i=0; i<dims*8; i++) {
+        rowDims[i] = rds[i/8];
+        colDims[i] = cds[i/8];
+    }
+
+    int streamList[dims*8];
+    for (int i=0; i<dims*8; i++) {
+        streamList[i] = (i % 8) + 1;
+    }
 
     int size = (sizeof(rowDims) / sizeof(rowDims[0]));
     int executionTimes[size*8];
