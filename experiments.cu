@@ -105,23 +105,31 @@ void instantiateMatVec(int m, int n, double *mat, double *vec) {
   }
 }
 
-void generateLatexTable(int* N, int* M, int* executionTime, double* flopRate, int* numStreams, int size, std::string tableTitle, std::string output) {
+void generateLatexTable(int* N, int* M, int* creationTimes, int* executionTime, double* flopRate, int* numStreams, int size, std::string tableTitle, std::string output) {
     std::ofstream myfile;
     myfile.open(output);
     myfile << "\\begin{table}[htbp]\n";
     myfile << "  \\centering\n";
     myfile << "  \\caption{" << tableTitle << "}\n";
-    myfile << "  \\begin{tabular}{|c|c|c|c|c|}\n";
+    myfile << "  \\begin{tabular}{|c|c|c|c|c|c|}\n";
     myfile << "    \\hline\n";
-    myfile << "    \\multirow{2}{*}{N} & \\multirow{2}{*}{M} & \\multirow{2}{*}{Streams} & \\multicolumn{2}{c|}{Performance Metrics} \\\\\n";
-    myfile << "    \\cline{4-5}\n";
-    myfile << "    & & & Execution Time (ms) & Flop Rate (TFLOP/s) \\\\\n";
+    myfile << "    \\multirow{2}{*}{N} & \\multirow{2}{*}{M} & \\multirow{2}{*}{Streams} & \\multicolumn{3}{c|c|}{Performance Metrics} \\\\\n";
+    myfile << "    \\cline{4-6}\n";
+    myfile << "    & & & Creation Time (ms) & Execution Time (ms) & Flop Rate (TFLOP/s) \\\\\n";
     myfile << "    \\hline\n";
 
+    for (int i = 0; i < size; i++) {
+        if (i > 0 && i % 8 == 0) {
+            myfile << "    \\hline\n";
+        }
 
-    myfile << "    " << N[i] << " & " << M[i] << " & " << numStreams[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
-    for (int i = 1; i < size; i++) {
-        myfile << "    " << " & & " << numStreams[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
+        if (i % 8 == 0) {
+            myfile << "    " << N[i] << " & " << M[i] << " & " << numStreams[i] << " & " << creationTimes[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
+        } else {
+            myfile << "    & & " << numStreams[i] << " & " << creationTimes[i] << " & " << executionTime[i] << " & " << flopRate[i] << " \\\\\n";
+        }
+
+
     }
 
     myfile << "    \\hline\n";
@@ -134,8 +142,8 @@ void runExperiment(Experiment e, std::string output) {
 
     // int rowDims[] = {10, 10, 10, 10, 100, 100, 100, 100, 1000, 1000, 1000, 1000, 10000, 10000, 10000};
     // int colDims[] = {10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000};
-    int rds[] = {1000, 1500}; // , 2000, 2500, 5000};
-    int cds[] = {1000, 1500}; //, 2000, 2500, 5000};
+    int rds[] = {1000, 1500, 2000, 2500, 5000};
+    int cds[] = {1000, 1500, 2000, 2500, 5000};
 
     int dims = (sizeof(rds) / sizeof(rds[0]));
     int rowDims[dims*8];
@@ -152,16 +160,19 @@ void runExperiment(Experiment e, std::string output) {
     }
 
     int size = (sizeof(rowDims) / sizeof(rowDims[0]));
-    int executionTimes[size*8];
-    double flopRates[size*8];
+    int executionTimes[size];
+    int creationTimes[size];
+    double flopRates[size];
 
     std::string algorithm;
-    for (int numStreams = 1; numStreams <= 8; numStreams++) {
-        printf("num streams: %d\n", numStreams);
-        for (int j = 0; j < size; j++) {
+       
+    for (int j = 0; j < size; j++) { 
+        
+        for (int numStreams = 1; numStreams <= 8; numStreams++) {
             int M = rowDims[j];
             int N = colDims[j];
             printf("dims: %d, %d\n", M, N);
+            printf("num streams: %d\n", numStreams);
             int rowsPerBlock = (M + numStreams - 1) / numStreams;
 
             double *mat_h;
@@ -191,13 +202,17 @@ void runExperiment(Experiment e, std::string output) {
             struct timeval endTime;
 
             gettimeofday(&startTime, nullptr);  
-            gettimeofday(&endTime, nullptr);
 
             cudaStream_t streams[numStreams];
 
             for (int i=0; i<numStreams; i++) {
                 cudaStreamCreate(&streams[i]);
             }
+
+            gettimeofday(&endTime, nullptr);
+            int microseconds = (endTime.tv_sec - startTime.tv_sec) * 1000000 + (endTime.tv_usec - startTime.tv_usec);
+            // std::cout << "Time to create "<< numStreams << " streams: " << microseconds << std::endl;
+            creationTimes[j*8 + numStreams-1] = microseconds;
 
             for (int i=0; i<numStreams; i++) {
                 cudaMemcpyAsync(&mat_d[i*rowsPerBlock*N], &mat_h[i*rowsPerBlock*N], sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, streams[i]);
@@ -223,20 +238,21 @@ void runExperiment(Experiment e, std::string output) {
 
             cudaDeviceSynchronize();
 
+            gettimeofday(&endTime, nullptr);
+
             for (int i = 0; i < numStreams; i++) {
                 cudaStreamDestroy(streams[i]);
             }
 
-            gettimeofday(&endTime, nullptr);
-
             double flops = 2 * M * N;
-            int microseconds = (endTime.tv_sec - startTime.tv_sec) * 1000000 + (endTime.tv_usec - startTime.tv_usec);
+            microseconds = (endTime.tv_sec - startTime.tv_sec) * 1000000 + (endTime.tv_usec - startTime.tv_usec);
             double floprate = getFlopRate(flops, microseconds);
 
-            executionTimes[j + (numStreams-1)*8] = microseconds;
-            flopRates[j + (numStreams-1)*8] = floprate;
+            executionTimes[j*8 + numStreams-1] = microseconds;
+            flopRates[j*8 + numStreams-1] = floprate;
 
             std::cout << "M: " << M << ", N: " << N << ", Time: " << microseconds << ", Floprate: " << floprate << std::endl;
+            std::cout << "M: " << M << ", N: " << N << ", Time: " << microseconds << ", Floprate: " << flopRates[j*8 + numStreams-1] << ", idx: "<< j*8 + numStreams-1 << std::endl;
 
             //free memory 
             cudaFree(res_d);
@@ -249,7 +265,7 @@ void runExperiment(Experiment e, std::string output) {
         }
     }
 
-    generateLatexTable(rowDims, colDims, executionTimes, flopRates, streamList, size, algorithm, output);
+    generateLatexTable(rowDims, colDims, creationTimes, executionTimes, flopRates, streamList, size, algorithm, output);
 }
 
 void validate(Experiment e) {
