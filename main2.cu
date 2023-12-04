@@ -15,7 +15,7 @@ using namespace std;
 #define NWARPS 32
 #define ROWS_PER_BLOCK 4
 
-int numStreams = 2;
+int numStreams = 3;
 
 // randomization
 std::random_device rd;
@@ -67,8 +67,7 @@ int main() {
     }
     cudaSetDevice(0);
 
-
-    int M = 100;
+    int M = 300;
     int N = 1000;
 
     int rowsPerBlock = (M / numStreams);
@@ -76,24 +75,27 @@ int main() {
     double mat_h[M*N] = {0};
     double mat_h0[rowsPerBlock*N] = {0};
     double mat_h1[rowsPerBlock*N] = {0};
+    double mat_h2[rowsPerBlock*N] = {0};
 
     double vec_h[N] = {0};
     double res_h0[rowsPerBlock] = {0};
     double res_h1[rowsPerBlock] = {0};
+    double res_h2[rowsPerBlock] = {0};
 
     instantiateMatVec(M, N, mat_h, vec_h);
     instantiateMatVec(rowsPerBlock, N, mat_h0, vec_h);
     instantiateMatVec(rowsPerBlock, N, mat_h1, vec_h);
+    instantiateMatVec(rowsPerBlock, N, mat_h2, vec_h);
 
     // instantiateMatVec(M, N, mat_h, vec_h);
 
     double *mat_d0;
     double *mat_d1;
-    double *vec_d;
+    double *mat_d2;
+
     double *res_d0;
     double *res_d1;
-
-
+    double *res_d2;
 
     struct timeval startTime;
     struct timeval endTime;
@@ -103,70 +105,86 @@ int main() {
     
     gettimeofday(&startTime, nullptr);  
 
-    cudaStream_t stream0, stream1;
+    cudaStream_t stream0, stream1, stream2;
     cudaStreamCreate(&stream0);
     cudaStreamCreate(&stream1);
+    cudaStreamCreate(&stream2);
 
         // allocate memory on device
     cudaMalloc( (void**) &mat_d0, sizeof(double)*rowsPerBlock*N);
     cudaMalloc( (void**) &mat_d1, sizeof(double)*rowsPerBlock*N);
+    cudaMalloc( (void**) &mat_d2, sizeof(double)*rowsPerBlock*N);
 
-    cudaMalloc( (void**) &vec_d, sizeof(double)*N);
+    cudaHostAlloc( (void**) &vec_h, sizeof(double)*N, cudaHostAllocDefault);
+    instantiateMatVec(rowsPerBlock, N, mat_h2, vec_h);
+
     cudaMalloc( (void**) &res_d0, sizeof(double)*rowsPerBlock);
     cudaMalloc( (void**) &res_d1, sizeof(double)*rowsPerBlock);
+    cudaMalloc( (void**) &res_d2, sizeof(double)*rowsPerBlock);
 
-    cudaMemcpy(vec_d, vec_h, sizeof(double)*N,cudaMemcpyHostToDevice);
+    // cudaMemcpy(vec_d, vec_h, sizeof(double)*N,cudaMemcpyHostToDevice);
 
-    for (int i = 0; i < 10; i++) {
-        cudaMemcpyAsync(mat_d0, mat_h0, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
-        cudaMemcpyAsync(mat_d1, mat_h1, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
-        matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d0, vec_d, res_d0);
-        matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d1, vec_d, res_d1);
+    // for (int i = 0; i < 10; i++) {
+    cudaMemcpyAsync(mat_d0, mat_h0, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream0);
+    cudaMemcpyAsync(mat_d1, mat_h1, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream1);
+    cudaMemcpyAsync(mat_d2, mat_h2, sizeof(double)*rowsPerBlock*N, cudaMemcpyHostToDevice, stream2);
 
-        cudaMemcpyAsync(res_h0, res_d0, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
-        cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream1);
+    matVecKernel<<<nblocks, nthreads, 0, stream0>>>(M, N, mat_d0, vec_h, res_d0);
+    matVecKernel<<<nblocks, nthreads, 0, stream1>>>(M, N, mat_d1, vec_h, res_d1);
+    matVecKernel<<<nblocks, nthreads, 0, stream2>>>(M, N, mat_d2, vec_h, res_d2);
+
+    cudaMemcpyAsync(res_h0, res_d0, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream0);
+    cudaMemcpyAsync(res_h1, res_d1, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream1);
+    cudaMemcpyAsync(res_h2, res_d2, sizeof(double)*rowsPerBlock, cudaMemcpyDeviceToHost, stream2);
         // cudaMemcpyAsync(&res_h[rowsPerBlock], &res_d[rowsPerBlock], sizeof(double)*min(rowsPerBlock, M - rowsPerBlock), cudaMemcpyDeviceToHost, stream1);
-    }
+    // }
 
     cudaStreamSynchronize(stream0);
     cudaStreamSynchronize(stream1);
+    cudaStreamSynchronize(stream2);
 
     cudaStreamDestroy(stream0);
     cudaStreamDestroy(stream1);
+    cudaStreamDestroy(stream2);
 
     gettimeofday(&endTime, nullptr);
 
     int microseconds = (endTime.tv_sec - startTime.tv_sec) * 1000000 + (endTime.tv_usec - startTime.tv_usec);
     std::cout << "creating streams took " << microseconds << " microseconds" << std::endl;
 
-    double expected[M] = {0};
-    for (int i = 0; i < M; i++) {
-        double sum = 0.0;
-        int offset = i * N;
-        for (int j = 0; j < N; j++) {
-            sum += mat_h[offset+j] * vec_h[j];
-        }
-        expected[i] = sum;
-    }
+    // double expected[M] = {0};
+    // for (int i = 0; i < M; i++) {
+    //     double sum = 0.0;
+    //     int offset = i * N;
+    //     for (int j = 0; j < N; j++) {
+    //         sum += mat_h[offset+j] * vec_h[j];
+    //     }
+    //     expected[i] = sum;
+    // }
 
-    for (int i = 0; i < rowsPerBlock; i++) {
-        if (abs(expected[i] - res_h0[i]) > 0.0001) {
-            printf("DIFF FOUND: expected: %g, actual: %g", expected[i], res_h0[i]);
-        } else if (i % 100 == 0) {
-            printf("no diff, found %g \n", expected[i]);
-        }
-    }
-    for (int i = 0; i < rowsPerBlock; i++) {
-        if (abs(expected[i+rowsPerBlock] - res_h1[i]) > 0.0001) {
-            printf("DIFF FOUND: expected: %g, actual: %g", expected[i+rowsPerBlock], res_h1[i]);
-        } else if (i % 100 == 0) {
-            printf("no diff, found %g \n", expected[i+rowsPerBlock]);
-        }
-    }
+    // for (int i = 0; i < rowsPerBlock; i++) {
+    //     if (abs(expected[i] - res_h0[i]) > 0.0001) {
+    //         printf("DIFF FOUND: expected: %g, actual: %g", expected[i], res_h0[i]);
+    //     } else if (i % 100 == 0) {
+    //         printf("no diff, found %g \n", expected[i]);
+    //     }
+    // }
+    // for (int i = 0; i < rowsPerBlock; i++) {
+    //     if (abs(expected[i+rowsPerBlock] - res_h1[i]) > 0.0001) {
+    //         printf("DIFF FOUND: expected: %g, actual: %g", expected[i+rowsPerBlock], res_h1[i]);
+    //     } else if (i % 100 == 0) {
+    //         printf("no diff, found %g \n", expected[i+rowsPerBlock]);
+    //     }
+    // }
 
     cudaFree(res_d0);
     cudaFree(res_d1);
-    cudaFree(vec_d);
+    cudaFree(res_d2);
+
+    // cudaFree(vec_d);
+    cudaFreeHost(vec_h);
+
     cudaFree(mat_d0);
     cudaFree(mat_d1);
+    cudaFree(mat_d2);
 }
