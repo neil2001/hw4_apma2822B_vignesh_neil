@@ -142,8 +142,10 @@ void runExperiment(Experiment e, std::string output) {
 
     // int rowDims[] = {10, 10, 10, 10, 100, 100, 100, 100, 1000, 1000, 1000, 1000, 10000, 10000, 10000};
     // int colDims[] = {10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000, 10000, 10, 100, 1000};
-    int rds[] = {1000, 1500, 2000, 2500, 5000};
-    int cds[] = {1000, 1500, 2000, 2500, 5000};
+    // int rds[] = {1000, 1500, 2000, 2500, 5000};
+    // int cds[] = {1000, 1500, 2000, 2500, 5000};
+    int rds[] = {1000};
+    int cds[] = {1000};
 
     int dims = (sizeof(rds) / sizeof(rds[0]));
     int rowDims[dims*8];
@@ -166,11 +168,11 @@ void runExperiment(Experiment e, std::string output) {
 
     std::string algorithm;
        
-    for (int j = 0; j < size; j++) { 
-        
+    for (int j = 0; j < dims; j++) { 
         for (int numStreams = 1; numStreams <= 8; numStreams++) {
-            int M = rowDims[j];
-            int N = colDims[j];
+            printf("%d, %d\n", j, numStreams);
+            int M = rds[j];
+            int N = cds[j];
             printf("dims: %d, %d\n", M, N);
             printf("num streams: %d\n", numStreams);
             int rowsPerBlock = (M + numStreams - 1) / numStreams;

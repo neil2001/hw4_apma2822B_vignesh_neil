@@ -25,5 +25,6 @@ nvidia-smi
 # nvcc -arch=sm_86 -O2 main.cu
 nvcc -O2 experiments.cu 
 # nsys profile --stats=true --force-overwrite=true --output=outputs/gpu_report_no_warp ./a.out NO_WARP -o ./outputs/NO_WARP.txt
-# nsys profile --stats=true --force-overwrite=true --output=outputs/gpu_report_multi_warp ./a.out MULTI_WARP -o ./outputs/MULTI_WARP.txt
-./a.out MULTI_WARP -o ./outputs/MULTI_WARP.txt
+nsys profile --stats=true --force-overwrite=true --output=outputs/gpu_report_multi_warp ./a.out MULTI_WARP -o ./outputs/MULTI_WARP.txt
+# ./a.out MULTI_WARP -o ./outputs/MULTI_WARP.txt
+# ./a.out NO_WARP -o ./outputs/NO_WARP.txt

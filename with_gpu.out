@@ -1,13 +1,13 @@
 ## SLURM PROLOG ###############################################################
-##    Job ID : 12283927
+##    Job ID : 12284319
 ##  Job Name : cuda.sh
-##  Nodelist : gpu2008
+##  Nodelist : gpu2010
 ##      CPUs : 1
 ##   Mem/CPU : 2800 MB
 ## Directory : /oscar/home/nxu4/apma2822/hw4_apma2822B_vignesh_neil
-##   Job Started : Mon Dec  4 18:07:41 EST 2023
+##   Job Started : Mon Dec  4 18:30:37 EST 2023
 ###############################################################################
-Mon Dec  4 18:07:41 2023       
+Mon Dec  4 18:30:37 2023       
 +---------------------------------------------------------------------------------------+
 | NVIDIA-SMI 535.54.03              Driver Version: 535.54.03    CUDA Version: 12.2     |
 |-----------------------------------------+----------------------+----------------------+
@@ -15,8 +15,8 @@ Mon Dec  4 18:07:41 2023
 | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
 |                                         |                      |               MIG M. |
 |=========================================+======================+======================|
-|   0  Quadro RTX 6000                Off | 00000000:63:00.0 Off |                  Off |
-| 33%   32C    P8               9W / 260W |     10MiB / 24576MiB |      0%      Default |
+|   0  Quadro RTX 6000                Off | 00000000:3D:00.0 Off |                  Off |
+| 33%   34C    P8              11W / 260W |     24MiB / 24576MiB |      0%      Default |
 |                                         |                      |                  N/A |
 +-----------------------------------------+----------------------+----------------------+
                                                                                          
@@ -25,178 +25,121 @@ Mon Dec  4 18:07:41 2023
 |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
 |        ID   ID                                                             Usage      |
 |=======================================================================================|
-|    0   N/A  N/A     22451      G   X                                             8MiB |
+|    0   N/A  N/A     15101      G   X                                            22MiB |
 +---------------------------------------------------------------------------------------+
 ncuda_devices = 1
+0, 1
 dims: 1000, 1000
 num streams: 1
-M: 1000, N: 1000, Time: 5863, Floprate: 0.000341122
-M: 1000, N: 1000, Time: 5863, Floprate: 0.000341122, idx: 0
+M: 1000, N: 1000, Time: 6148, Floprate: 0.000325309
+M: 1000, N: 1000, Time: 6148, Floprate: 0.000325309, idx: 0
+0, 2
 dims: 1000, 1000
 num streams: 2
-M: 1000, N: 1000, Time: 697, Floprate: 0.00286944
-M: 1000, N: 1000, Time: 697, Floprate: 0.00286944, idx: 1
+M: 1000, N: 1000, Time: 692, Floprate: 0.00289017
+M: 1000, N: 1000, Time: 692, Floprate: 0.00289017, idx: 1
+0, 3
 dims: 1000, 1000
 num streams: 3
-M: 1000, N: 1000, Time: 463, Floprate: 0.00431965
-M: 1000, N: 1000, Time: 463, Floprate: 0.00431965, idx: 2
+M: 1000, N: 1000, Time: 445, Floprate: 0.00449438
+M: 1000, N: 1000, Time: 445, Floprate: 0.00449438, idx: 2
+0, 4
 dims: 1000, 1000
 num streams: 4
-M: 1000, N: 1000, Time: 679, Floprate: 0.00294551
-M: 1000, N: 1000, Time: 679, Floprate: 0.00294551, idx: 3
+M: 1000, N: 1000, Time: 663, Floprate: 0.00301659
+M: 1000, N: 1000, Time: 663, Floprate: 0.00301659, idx: 3
+0, 5
 dims: 1000, 1000
 num streams: 5
-M: 1000, N: 1000, Time: 1137, Floprate: 0.00175901
-M: 1000, N: 1000, Time: 1137, Floprate: 0.00175901, idx: 4
+M: 1000, N: 1000, Time: 1119, Floprate: 0.00178731
+M: 1000, N: 1000, Time: 1119, Floprate: 0.00178731, idx: 4
+0, 6
 dims: 1000, 1000
 num streams: 6
-M: 1000, N: 1000, Time: 593, Floprate: 0.00337268
-M: 1000, N: 1000, Time: 593, Floprate: 0.00337268, idx: 5
+M: 1000, N: 1000, Time: 540, Floprate: 0.0037037
+M: 1000, N: 1000, Time: 540, Floprate: 0.0037037, idx: 5
+0, 7
 dims: 1000, 1000
 num streams: 7
-M: 1000, N: 1000, Time: 568, Floprate: 0.00352113
-M: 1000, N: 1000, Time: 568, Floprate: 0.00352113, idx: 6
+M: 1000, N: 1000, Time: 557, Floprate: 0.00359066
+M: 1000, N: 1000, Time: 557, Floprate: 0.00359066, idx: 6
+0, 8
 dims: 1000, 1000
 num streams: 8
-M: 1000, N: 1000, Time: 1089, Floprate: 0.00183655
-M: 1000, N: 1000, Time: 1089, Floprate: 0.00183655, idx: 7
-dims: 1000, 1000
-num streams: 1
-M: 1000, N: 1000, Time: 985, Floprate: 0.00203046
-M: 1000, N: 1000, Time: 985, Floprate: 0.00203046, idx: 8
-dims: 1000, 1000
-num streams: 2
-M: 1000, N: 1000, Time: 702, Floprate: 0.002849
-M: 1000, N: 1000, Time: 702, Floprate: 0.002849, idx: 9
-dims: 1000, 1000
-num streams: 3
-M: 1000, N: 1000, Time: 467, Floprate: 0.00428266
-M: 1000, N: 1000, Time: 467, Floprate: 0.00428266, idx: 10
-dims: 1000, 1000
-num streams: 4
-M: 1000, N: 1000, Time: 682, Floprate: 0.00293255
-M: 1000, N: 1000, Time: 682, Floprate: 0.00293255, idx: 11
-dims: 1000, 1000
-num streams: 5
-M: 1000, N: 1000, Time: 676, Floprate: 0.00295858
-M: 1000, N: 1000, Time: 676, Floprate: 0.00295858, idx: 12
-dims: 1000, 1000
-num streams: 6
-M: 1000, N: 1000, Time: 559, Floprate: 0.00357782
-M: 1000, N: 1000, Time: 559, Floprate: 0.00357782, idx: 13
-dims: 1000, 1000
-num streams: 7
-M: 1000, N: 1000, Time: 754, Floprate: 0.00265252
-M: 1000, N: 1000, Time: 754, Floprate: 0.00265252, idx: 14
-dims: 1000, 1000
-num streams: 8
-M: 1000, N: 1000, Time: 1184, Floprate: 0.00168919
-M: 1000, N: 1000, Time: 1184, Floprate: 0.00168919, idx: 15
-dims: 1000, 1000
-num streams: 1
-M: 1000, N: 1000, Time: 836, Floprate: 0.00239234
-M: 1000, N: 1000, Time: 836, Floprate: 0.00239234, idx: 16
-dims: 1000, 1000
-num streams: 2
-M: 1000, N: 1000, Time: 702, Floprate: 0.002849
-M: 1000, N: 1000, Time: 702, Floprate: 0.002849, idx: 17
-dims: 1000, 1000
-num streams: 3
-M: 1000, N: 1000, Time: 710, Floprate: 0.0028169
-M: 1000, N: 1000, Time: 710, Floprate: 0.0028169, idx: 18
-dims: 1000, 1000
-num streams: 4
-M: 1000, N: 1000, Time: 724, Floprate: 0.00276243
-M: 1000, N: 1000, Time: 724, Floprate: 0.00276243, idx: 19
-dims: 1000, 1000
-num streams: 5
-M: 1000, N: 1000, Time: 682, Floprate: 0.00293255
-M: 1000, N: 1000, Time: 682, Floprate: 0.00293255, idx: 20
-dims: 1000, 1000
-num streams: 6
-M: 1000, N: 1000, Time: 547, Floprate: 0.00365631
-M: 1000, N: 1000, Time: 547, Floprate: 0.00365631, idx: 21
-dims: 1000, 1000
-num streams: 7
-M: 1000, N: 1000, Time: 565, Floprate: 0.00353982
-M: 1000, N: 1000, Time: 565, Floprate: 0.00353982, idx: 22
-dims: 1000, 1000
-num streams: 8
-M: 1000, N: 1000, Time: 670, Floprate: 0.00298507
-M: 1000, N: 1000, Time: 670, Floprate: 0.00298507, idx: 23
-dims: 1000, 1000
-num streams: 1
-M: 1000, N: 1000, Time: 745, Floprate: 0.00268456
-M: 1000, N: 1000, Time: 745, Floprate: 0.00268456, idx: 24
-dims: 1000, 1000
-num streams: 2
-M: 1000, N: 1000, Time: 996, Floprate: 0.00200803
-M: 1000, N: 1000, Time: 996, Floprate: 0.00200803, idx: 25
-dims: 1000, 1000
-num streams: 3
-M: 1000, N: 1000, Time: 795, Floprate: 0.00251572
-M: 1000, N: 1000, Time: 795, Floprate: 0.00251572, idx: 26
-dims: 1000, 1000
-num streams: 4
-M: 1000, N: 1000, Time: 757, Floprate: 0.00264201
-M: 1000, N: 1000, Time: 757, Floprate: 0.00264201, idx: 27
-dims: 1000, 1000
-num streams: 5
-M: 1000, N: 1000, Time: 675, Floprate: 0.00296296
-M: 1000, N: 1000, Time: 675, Floprate: 0.00296296, idx: 28
-dims: 1000, 1000
-num streams: 6
-M: 1000, N: 1000, Time: 730, Floprate: 0.00273973
-M: 1000, N: 1000, Time: 730, Floprate: 0.00273973, idx: 29
-dims: 1000, 1000
-num streams: 7
-M: 1000, N: 1000, Time: 616, Floprate: 0.00324675
-M: 1000, N: 1000, Time: 616, Floprate: 0.00324675, idx: 30
-dims: 1000, 1000
-num streams: 8
-M: 1000, N: 1000, Time: 659, Floprate: 0.0030349
-M: 1000, N: 1000, Time: 659, Floprate: 0.0030349, idx: 31
-dims: 1000, 1000
-num streams: 1
-M: 1000, N: 1000, Time: 742, Floprate: 0.00269542
-M: 1000, N: 1000, Time: 742, Floprate: 0.00269542, idx: 32
-dims: 1000, 1000
-num streams: 2
-M: 1000, N: 1000, Time: 701, Floprate: 0.00285307
-M: 1000, N: 1000, Time: 701, Floprate: 0.00285307, idx: 33
-dims: 1000, 1000
-num streams: 3
-M: 1000, N: 1000, Time: 464, Floprate: 0.00431034
-M: 1000, N: 1000, Time: 464, Floprate: 0.00431034, idx: 34
-dims: 1000, 1000
-num streams: 4
-M: 1000, N: 1000, Time: 678, Floprate: 0.00294985
-M: 1000, N: 1000, Time: 678, Floprate: 0.00294985, idx: 35
-dims: 1000, 1000
-num streams: 5
-M: 1000, N: 1000, Time: 883, Floprate: 0.00226501
-M: 1000, N: 1000, Time: 883, Floprate: 0.00226501, idx: 36
-dims: 1000, 1000
-num streams: 6
-M: 1000, N: 1000, Time: 1002, Floprate: 0.00199601
-M: 1000, N: 1000, Time: 1002, Floprate: 0.00199601, idx: 37
-dims: 1000, 1000
-num streams: 7
-M: 1000, N: 1000, Time: 872, Floprate: 0.00229358
-M: 1000, N: 1000, Time: 872, Floprate: 0.00229358, idx: 38
-dims: 1000, 1000
-num streams: 8
-M: 1000, N: 1000, Time: 674, Floprate: 0.00296736
-M: 1000, N: 1000, Time: 674, Floprate: 0.00296736, idx: 39
-dims: 1000, 1000
-num streams: 1
-M: 1000, N: 1000, Time: 1062, Floprate: 0.00188324
-M: 1000, N: 1000, Time: 1062, Floprate: 0.00188324, idx: 40
-dims: 1000, 1000
-num streams: 2
-M: 1000, N: 1000, Time: 899, Floprate: 0.00222469
-M: 1000, N: 1000, Time: 899, Floprate: 0.00222469, idx: 41
-dims: 1000, 1000
-num streams: 3
-M: 1000, N: 1000, Time: 480, Floprate: 0.00416667
-M: 1000, N: 1000, Time: 480, Floprate: 0.00416667, idx: 42
+M: 1000, N: 1000, Time: 657, Floprate: 0.00304414
+M: 1000, N: 1000, Time: 657, Floprate: 0.00304414, idx: 7
+Generating '/tmp/nsys-report-b934.qdstrm'
+[1/8] [0%                          ] gpu_report_multi_warp.nsys-rep[1/8] [0%                          ] gpu_report_multi_warp.nsys-rep[1/8] [===========50%              ] gpu_report_multi_warp.nsys-rep[1/8] [========================100%] gpu_report_multi_warp.nsys-rep[1/8] [==19%                       ] gpu_report_multi_warp.nsys-rep[1/8] [==20%                       ] gpu_report_multi_warp.nsys-rep[1/8] [14%                         ] gpu_report_multi_warp.nsys-rep[1/8] [=====29%                    ] gpu_report_multi_warp.nsys-rep[1/8] [=====30%                    ] gpu_report_multi_warp.nsys-rep[1/8] [=====31%                    ] gpu_report_multi_warp.nsys-rep[1/8] [=====32%                    ] gpu_report_multi_warp.nsys-rep[1/8] [======33%                   ] gpu_report_multi_warp.nsys-rep[1/8] [=======39%                  ] gpu_report_multi_warp.nsys-rep[1/8] [========42%                 ] gpu_report_multi_warp.nsys-rep[1/8] [=========45%                ] gpu_report_multi_warp.nsys-rep[1/8] [=========46%                ] gpu_report_multi_warp.nsys-rep[1/8] [===========51%              ] gpu_report_multi_warp.nsys-rep[1/8] [===========52%              ] gpu_report_multi_warp.nsys-rep[1/8] [===========53%              ] gpu_report_multi_warp.nsys-rep[1/8] [============54%             ] gpu_report_multi_warp.nsys-rep[1/8] [============55%             ] gpu_report_multi_warp.nsys-rep[1/8] [============56%             ] gpu_report_multi_warp.nsys-rep[1/8] [============57%             ] gpu_report_multi_warp.nsys-rep[1/8] [=============58%            ] gpu_report_multi_warp.nsys-rep[1/8] [=============59%            ] gpu_report_multi_warp.nsys-rep[1/8] [=============60%            ] gpu_report_multi_warp.nsys-rep[1/8] [==============61%           ] gpu_report_multi_warp.nsys-rep[1/8] [==============62%           ] gpu_report_multi_warp.nsys-rep[1/8] [==============63%           ] gpu_report_multi_warp.nsys-rep[1/8] [==============64%           ] gpu_report_multi_warp.nsys-rep[1/8] [===============65%          ] gpu_report_multi_warp.nsys-rep[1/8] [===============66%          ] gpu_report_multi_warp.nsys-rep[1/8] [===============67%          ] gpu_report_multi_warp.nsys-rep[1/8] [================68%         ] gpu_report_multi_warp.nsys-rep[1/8] [================70%         ] gpu_report_multi_warp.nsys-rep[1/8] [================71%         ] gpu_report_multi_warp.nsys-rep[1/8] [====================84%     ] gpu_report_multi_warp.nsys-rep[1/8] [=======================96%  ] gpu_report_multi_warp.nsys-rep[1/8] [========================100%] gpu_report_multi_warp.nsys-rep[1/8] [========================100%] gpu_report_multi_warp.nsys-rep
+[2/8] [0%                          ] gpu_report_multi_warp.sqlite[2/8] [1%                          ] gpu_report_multi_warp.sqlite[2/8] [2%                          ] gpu_report_multi_warp.sqlite[2/8] [3%                          ] gpu_report_multi_warp.sqlite[2/8] [4%                          ] gpu_report_multi_warp.sqlite[2/8] [5%                          ] gpu_report_multi_warp.sqlite[2/8] [6%                          ] gpu_report_multi_warp.sqlite[2/8] [7%                          ] gpu_report_multi_warp.sqlite[2/8] [8%                          ] gpu_report_multi_warp.sqlite[2/8] [9%                          ] gpu_report_multi_warp.sqlite[2/8] [10%                         ] gpu_report_multi_warp.sqlite[2/8] [11%                         ] gpu_report_multi_warp.sqlite[2/8] [12%                         ] gpu_report_multi_warp.sqlite[2/8] [13%                         ] gpu_report_multi_warp.sqlite[2/8] [14%                         ] gpu_report_multi_warp.sqlite[2/8] [=15%                        ] gpu_report_multi_warp.sqlite[2/8] [=16%                        ] gpu_report_multi_warp.sqlite[2/8] [=17%                        ] gpu_report_multi_warp.sqlite[2/8] [==18%                       ] gpu_report_multi_warp.sqlite[2/8] [==19%                       ] gpu_report_multi_warp.sqlite[2/8] [==20%                       ] gpu_report_multi_warp.sqlite[2/8] [==21%                       ] gpu_report_multi_warp.sqlite[2/8] [===22%                      ] gpu_report_multi_warp.sqlite[2/8] [===23%                      ] gpu_report_multi_warp.sqlite[2/8] [===24%                      ] gpu_report_multi_warp.sqlite[2/8] [====25%                     ] gpu_report_multi_warp.sqlite[2/8] [====26%                     ] gpu_report_multi_warp.sqlite[2/8] [====27%                     ] gpu_report_multi_warp.sqlite[2/8] [====28%                     ] gpu_report_multi_warp.sqlite[2/8] [=====29%                    ] gpu_report_multi_warp.sqlite[2/8] [=====30%                    ] gpu_report_multi_warp.sqlite[2/8] [=====31%                    ] gpu_report_multi_warp.sqlite[2/8] [=====32%                    ] gpu_report_multi_warp.sqlite[2/8] [======33%                   ] gpu_report_multi_warp.sqlite[2/8] [======34%                   ] gpu_report_multi_warp.sqlite[2/8] [======35%                   ] gpu_report_multi_warp.sqlite[2/8] [=======36%                  ] gpu_report_multi_warp.sqlite[2/8] [=======37%                  ] gpu_report_multi_warp.sqlite[2/8] [=======38%                  ] gpu_report_multi_warp.sqlite[2/8] [=======39%                  ] gpu_report_multi_warp.sqlite[2/8] [========40%                 ] gpu_report_multi_warp.sqlite[2/8] [========41%                 ] gpu_report_multi_warp.sqlite[2/8] [========42%                 ] gpu_report_multi_warp.sqlite[2/8] [=========43%                ] gpu_report_multi_warp.sqlite[2/8] [=========44%                ] gpu_report_multi_warp.sqlite[2/8] [=========45%                ] gpu_report_multi_warp.sqlite[2/8] [=========46%                ] gpu_report_multi_warp.sqlite[2/8] [==========47%               ] gpu_report_multi_warp.sqlite[2/8] [==========48%               ] gpu_report_multi_warp.sqlite[2/8] [==========49%               ] gpu_report_multi_warp.sqlite[2/8] [===========50%              ] gpu_report_multi_warp.sqlite[2/8] [===========51%              ] gpu_report_multi_warp.sqlite[2/8] [===========52%              ] gpu_report_multi_warp.sqlite[2/8] [===========53%              ] gpu_report_multi_warp.sqlite[2/8] [============54%             ] gpu_report_multi_warp.sqlite[2/8] [============55%             ] gpu_report_multi_warp.sqlite[2/8] [============56%             ] gpu_report_multi_warp.sqlite[2/8] [============57%             ] gpu_report_multi_warp.sqlite[2/8] [=============58%            ] gpu_report_multi_warp.sqlite[2/8] [=============59%            ] gpu_report_multi_warp.sqlite[2/8] [=============60%            ] gpu_report_multi_warp.sqlite[2/8] [==============61%           ] gpu_report_multi_warp.sqlite[2/8] [==============62%           ] gpu_report_multi_warp.sqlite[2/8] [==============63%           ] gpu_report_multi_warp.sqlite[2/8] [==============64%           ] gpu_report_multi_warp.sqlite[2/8] [===============65%          ] gpu_report_multi_warp.sqlite[2/8] [===============66%          ] gpu_report_multi_warp.sqlite[2/8] [===============67%          ] gpu_report_multi_warp.sqlite[2/8] [================68%         ] gpu_report_multi_warp.sqlite[2/8] [================69%         ] gpu_report_multi_warp.sqlite[2/8] [================70%         ] gpu_report_multi_warp.sqlite[2/8] [================71%         ] gpu_report_multi_warp.sqlite[2/8] [=================72%        ] gpu_report_multi_warp.sqlite[2/8] [=================73%        ] gpu_report_multi_warp.sqlite[2/8] [=================74%        ] gpu_report_multi_warp.sqlite[2/8] [==================75%       ] gpu_report_multi_warp.sqlite[2/8] [==================76%       ] gpu_report_multi_warp.sqlite[2/8] [==================77%       ] gpu_report_multi_warp.sqlite[2/8] [==================78%       ] gpu_report_multi_warp.sqlite[2/8] [===================79%      ] gpu_report_multi_warp.sqlite[2/8] [===================80%      ] gpu_report_multi_warp.sqlite[2/8] [===================81%      ] gpu_report_multi_warp.sqlite[2/8] [===================82%      ] gpu_report_multi_warp.sqlite[2/8] [====================83%     ] gpu_report_multi_warp.sqlite[2/8] [====================84%     ] gpu_report_multi_warp.sqlite[2/8] [====================85%     ] gpu_report_multi_warp.sqlite[2/8] [=====================86%    ] gpu_report_multi_warp.sqlite[2/8] [=====================87%    ] gpu_report_multi_warp.sqlite[2/8] [=====================88%    ] gpu_report_multi_warp.sqlite[2/8] [=====================89%    ] gpu_report_multi_warp.sqlite[2/8] [======================90%   ] gpu_report_multi_warp.sqlite[2/8] [======================91%   ] gpu_report_multi_warp.sqlite[2/8] [======================92%   ] gpu_report_multi_warp.sqlite[2/8] [=======================93%  ] gpu_report_multi_warp.sqlite[2/8] [=======================94%  ] gpu_report_multi_warp.sqlite[2/8] [=======================95%  ] gpu_report_multi_warp.sqlite[2/8] [=======================96%  ] gpu_report_multi_warp.sqlite[2/8] [========================97% ] gpu_report_multi_warp.sqlite[2/8] [========================98% ] gpu_report_multi_warp.sqlite[2/8] [========================99% ] gpu_report_multi_warp.sqlite[2/8] [========================100%] gpu_report_multi_warp.sqlite[2/8] [========================100%] gpu_report_multi_warp.sqlite
+[3/8] Executing 'nvtx_sum' stats report
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)    Max (ns)    StdDev (ns)           Name         
+ --------  ---------------  ---------  ------------  ------------  ----------  -----------  ------------  ---------------------
+     58.0      302,333,254         14  21,595,232.4   4,623,777.0       4,507  102,066,506  35,816,704.8  poll                 
+     35.6      185,945,376        856     217,225.9      47,528.0         364   23,084,475   1,248,487.9  ioctl                
+      2.8       14,757,796          1  14,757,796.0  14,757,796.0  14,757,796   14,757,796           0.0  fopen64              
+      1.6        8,359,412         65     128,606.3      55,631.0       4,387    1,892,299     250,625.8  mmap64               
+      0.4        2,289,396         40      57,234.9       3,843.5         992    1,133,540     231,399.1  fopen                
+      0.4        1,883,107         75      25,108.1         337.0         135    1,126,794     154,021.8  fcntl                
+      0.3        1,532,613         12     127,717.8      38,790.0         452      710,377     229,444.0  write                
+      0.3        1,453,035          5     290,607.0       4,473.0         434    1,437,147     640,946.2  fread                
+      0.2        1,291,448         34      37,983.8       3,114.0       1,745    1,164,768     199,110.7  fclose               
+      0.1          564,555         22      25,661.6      18,380.5          31       64,606      21,986.0  fflush               
+      0.1          561,102         84       6,679.8       4,931.0         630       46,564       6,514.0  open64               
+      0.1          451,207          5      90,241.4      92,123.0      74,384      105,433      11,574.7  pthread_create       
+      0.0          132,125         20       6,606.3       2,328.0       1,205       66,809      14,399.1  mmap                 
+      0.0           34,539          7       4,934.1       4,180.0       1,420       10,037       3,225.0  open                 
+      0.0           32,812         25       1,312.5          55.0          37       31,486       6,286.2  fgets                
+      0.0           14,735          7       2,105.0       2,316.0         733        3,593       1,197.4  munmap               
+      0.0           14,097        144          97.9          49.0          35        1,130         189.7  fwrite               
+      0.0           13,809         14         986.4         503.0         287        3,438       1,002.0  read                 
+      0.0            9,295          5       1,859.0       1,618.0       1,258        2,665         549.8  mprotect             
+      0.0            9,121          2       4,560.5       4,560.5       3,516        5,605       1,477.1  socket               
+      0.0            8,569          1       8,569.0       8,569.0       8,569        8,569           0.0  connect              
+      0.0            4,243          1       4,243.0       4,243.0       4,243        4,243           0.0  pipe2                
+      0.0            2,825         64          44.1          23.0          22          348          52.6  pthread_mutex_trylock
+      0.0            2,460          8         307.5         305.5         157          593         135.8  dup                  
+      0.0            2,377         16         148.6         124.0          35          458         126.6  putc                 
+      0.0            1,220          1       1,220.0       1,220.0       1,220        1,220           0.0  bind                 
+      0.0              412          1         412.0         412.0         412          412           0.0  listen               
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)  Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  -----------  -----------  --------  ---------  -----------  ----------------------
+     59.1       63,658,122         27  2,357,708.2  1,296,781.0     4,871  6,598,562  2,747,384.0  cudaHostAlloc         
+     15.2       16,351,649         27    605,616.6    472,070.0     3,645  1,637,678    624,435.7  cudaFreeHost          
+      6.5        6,961,819         18    386,767.7    132,997.5    21,668  1,111,561    338,287.9  cudaMemcpy            
+      5.9        6,397,650         40    159,941.3      5,476.0     3,966  6,058,415    956,565.0  cudaLaunchKernel      
+      4.4        4,691,499          9    521,277.7    550,666.0     7,769  1,108,903    331,194.1  cudaDeviceSynchronize 
+      4.0        4,351,833         27    161,179.0    188,367.0     2,813    467,686    138,130.8  cudaMalloc            
+      3.4        3,631,076         27    134,484.3    175,481.0     2,444    313,436    102,901.9  cudaFree              
+      1.3        1,375,740         80     17,196.8      4,378.5       635    275,807     55,366.3  cudaMemcpyAsync       
+      0.2          223,082         40      5,577.1      2,844.5     2,214     43,757      7,266.9  cudaStreamCreate      
+      0.1          115,941         40      2,898.5      1,931.0     1,669     13,004      2,214.7  cudaStreamDestroy     
+      0.0            1,414          1      1,414.0      1,414.0     1,414      1,414          0.0  cuModuleGetLoadingMode
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                                Name                               
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  -----------------------------------------------------------------
+    100.0          678,397         40  16,959.9  15,536.0     5,088    73,952     11,724.1  matVecMultiWarp(int, int, double *, double *, double *, int, int)
+
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)   Med (ns)   Min (ns)  Max (ns)   StdDev (ns)      Operation     
+ --------  ---------------  -----  ---------  ---------  --------  ---------  -----------  ------------------
+     99.0       11,377,416     55  206,862.1  109,151.0       800  1,100,027    249,571.0  [CUDA memcpy HtoD]
+      1.0          119,903     37    3,240.6    3,232.0     1,280      7,328      1,634.5  [CUDA memcpy DtoH]
+
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)      Operation     
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------
+    123.113     55     2.238     1.144     0.001     8.000        2.723  [CUDA memcpy HtoD]
+      0.060     37     0.002     0.001     0.000     0.008        0.001  [CUDA memcpy DtoH]
+
+Generated:
+    /oscar/home/nxu4/apma2822/hw4_apma2822B_vignesh_neil/outputs/gpu_report_multi_warp.nsys-rep
+    /oscar/home/nxu4/apma2822/hw4_apma2822B_vignesh_neil/outputs/gpu_report_multi_warp.sqlite
